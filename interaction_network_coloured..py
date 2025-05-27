@@ -1,3 +1,5 @@
+# File: interaction_network_coloured.py
+
 import matplotlib
 
 matplotlib.use("Agg")

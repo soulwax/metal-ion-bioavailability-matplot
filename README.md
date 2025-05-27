@@ -1,7 +1,7 @@
 # Micronutrient-Interaction Network
 
-Visualizes how selected dietary minerals, trace elements, and electrolytes **boost** or **inhibit** one another’s bioavailability.  
-The spring-layout graph makes relationship hubs (e.g., calcium and iron) easy to spot, while curved arrows keep the diagram readable even with 20+ nutrients.
+These scripts create my most sophisticated visualization of micronutrient interactions,
+sources and relationships were thoroughly researched and curated from scientific literature available to me.
 
 ## Features
 
@@ -27,18 +27,10 @@ python interaction_network_elements.py
 ## Script Arguments
 
 ```bash
-python interaction_network_coloured.py --save network.png --dpi 600
-# save to file without previewing
-python interaction_network_coloured.py --save network.png --dpi 600 --no-legend
-python interaction_network_elements.py --save network.png --dpi 600
-python interaction_network_elements.py --save network.svg --dpi 600
-python interaction_network_elements.py --save network.pdf --dpi 600
-python interaction_network_elements.py --save network.pdf --dpi 600 --no-legend
-python interaction_network_elements.py --save network.pdf --dpi 600 --no-legend --no-labels
-python interaction_network_elements.py --save network.pdf --dpi 600 --no-legend --no-labels --no-edges
-
-# etc. see documentation of matplotlib.pyplot.savefig at 
+python interaction_network_elements_pretty.py # you can replace with any of the scripts
 ```
+
+This will save the output in the `images` directory.
 
 Matplotlib's `savefig` function supports formats like PNG, SVG, PDF, and more.
 Details: 
@@ -47,11 +39,15 @@ Details:
 
 ## Example Output
 
-![Sample Output](.github/resources/micronutrient_network_elements.png)
+![Sample Output](images/micronutrient_network_elements.png)
 
-### Coloured Output
+### Coloured Output with Labels
 
-![Sample Output Coloured](.github/resources/micronutrient_network_coloured.png)
+![Sample Output Coloured](images/micronutrient_network_coloured.png)
+
+### Even prettier Output
+
+![Sample Output SVG](images/micronutrient_network_enhanced.png)
 
 ## License
 
