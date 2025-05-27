@@ -1,4 +1,9 @@
+#!/usr/bin/env python3
+"""Expanded micronutrient interaction network with Agg backend and element labels."""
 import math
+import matplotlib
+
+matplotlib.use("Agg")  # forces the “Agg” file-only backend
 import matplotlib.pyplot as plt
 import networkx as nx
 
@@ -56,49 +61,63 @@ edges = [
     ("Lithium (Li)", "Iodine (I)", "inhibits"),
 ]
 
-# Build graph
-G = nx.DiGraph()
-for node in nodes:
-    G.add_node(node)
-for src, tgt, rel in edges:
-    G.add_edge(src, tgt, relation=rel)
 
-# Layout
-pos = nx.spring_layout(G, k=0.8, seed=42)
+def build_graph():
+    G = nx.DiGraph()
+    G.add_nodes_from(nodes)
+    for src, tgt, rel in edges:
+        G.add_edge(src, tgt, relation=rel)
+    return G
 
-# Draw
-plt.figure(figsize=(12, 12))
-nx.draw_networkx_nodes(G, pos, node_size=500)
-# Draw labels
-for node, (x, y) in pos.items():
-    plt.text(x, y, node, fontsize=8, ha="center", va="center")
 
-# Draw edges with styles
-for u, v, d in G.edges(data=True):
-    style = "dashed" if d["relation"] == "inhibits" else "solid"
-    nx.draw_networkx_edges(
-        G,
-        pos,
-        edgelist=[(u, v)],
-        arrowstyle="-|>",
-        arrowsize=12,
-        connectionstyle="arc3,rad=0.1",
-        style=style,
-        width=1.2,
-    )
-    # Midpoint label
-    xm, ym = (pos[u][0] + pos[v][0]) / 2, (pos[u][1] + pos[v][1]) / 2
-    label = "−" if d["relation"] == "inhibits" else "+"
-    plt.text(xm, ym, label, fontsize=10, ha="center", va="center")
+def draw_graph(G, dpi=300, path=".github/resources/micronutrient_network_elements.png"):
+    pos = nx.spring_layout(G, k=0.8, seed=42)
 
-# Legend
-from matplotlib.lines import Line2D
+    plt.figure(figsize=(12, 12))
+    nx.draw_networkx_nodes(G, pos, node_size=500)
 
-legend_elems = [
-    Line2D([0], [0], linestyle="solid", lw=1.2, label="Boosts (+)"),
-    Line2D([0], [0], linestyle="dashed", lw=1.2, label="Inhibits (−)"),
-]
-plt.legend(handles=legend_elems, loc="upper left", fontsize=9)
-plt.title("Comprehensive Micronutrient Interaction Network", fontsize=14)
-plt.axis("off")
-plt.show()
+    # Node labels
+    for node, (x, y) in pos.items():
+        plt.text(x, y, node, fontsize=8, ha="center", va="center")
+
+    # Edge styles and labels
+    for u, v, d in G.edges(data=True):
+        style = "dashed" if d["relation"] == "inhibits" else "solid"
+        nx.draw_networkx_edges(
+            G,
+            pos,
+            edgelist=[(u, v)],
+            arrowstyle="-|>",
+            arrowsize=12,
+            connectionstyle="arc3,rad=0.1",
+            style=style,
+            width=1.2,
+        )
+        xm, ym = (pos[u][0] + pos[v][0]) / 2, (pos[u][1] + pos[v][1]) / 2
+        label = "−" if d["relation"] == "inhibits" else "+"
+        plt.text(xm, ym, label, fontsize=10, ha="center", va="center")
+
+    # Legend
+    from matplotlib.lines import Line2D
+
+    legend_elems = [
+        Line2D([0], [0], linestyle="solid", lw=1.2, label="Boosts (+)"),
+        Line2D([0], [0], linestyle="dashed", lw=1.2, label="Inhibits (−)"),
+    ]
+    plt.legend(handles=legend_elems, loc="upper left", fontsize=9)
+    plt.title("Comprehensive Micronutrient Interaction Network", fontsize=14)
+    plt.axis("off")
+
+    # Ensure destination directory exists
+    from pathlib import Path
+
+    dest = Path(path)
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    plt.savefig(dest, dpi=dpi, bbox_inches="tight")
+    plt.close()
+    print(f"Figure saved to {dest}")
+
+
+if __name__ == "__main__":
+    graph = build_graph()
+    draw_graph(graph)

@@ -20,25 +20,38 @@ python3 -m venv venv
 source venv/bin/activate # On Unix/macOS
 venv\Scripts\activate # On Windows
 pip install -r requirements.txt
-python interaction_network_simple.py # For more nutrients use instead
+python interaction_network_coloured.py # For more nutrients use instead
 python interaction_network_elements.py
 ```
 
 ## Script Arguments
 
 ```bash
-python interaction_network_simple.py --save network.png --dpi 600
+python interaction_network_coloured.py --save network.png --dpi 600
+# save to file without previewing
+python interaction_network_coloured.py --save network.png --dpi 600 --no-legend
 python interaction_network_elements.py --save network.png --dpi 600
 python interaction_network_elements.py --save network.svg --dpi 600
 python interaction_network_elements.py --save network.pdf --dpi 600
 python interaction_network_elements.py --save network.pdf --dpi 600 --no-legend
 python interaction_network_elements.py --save network.pdf --dpi 600 --no-legend --no-labels
 python interaction_network_elements.py --save network.pdf --dpi 600 --no-legend --no-labels --no-edges
-python interaction_network_elements.py --save network.pdf --dpi 600 --no-legend --no-labels --no-edges --no-nodes
-python interaction_network_elements.py --save network.pdf --dpi 600 --no-legend --no-labels --no-edges --no-nodes --no-title
-python interaction_network_elements.py --save network.pdf --dpi 600 --no-legend --no-labels --no-edges --no-nodes --no-title --no-grid  
-# etc. see documentation of matplotlib.pyplot.savefig
+
+# etc. see documentation of matplotlib.pyplot.savefig at 
 ```
+
+Matplotlib's `savefig` function supports formats like PNG, SVG, PDF, and more.
+Details: 
+
+<https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.savefig.html>
+
+## Example Output
+
+![Sample Output](.github/resources/micronutrient_network_elements.png)
+
+### Coloured Output
+
+![Sample Output Coloured](.github/resources/micronutrient_network_coloured.png)
 
 ## License
 
