@@ -1,0 +1,18 @@
+{
+  "default": true,
+  "line-length": {
+    "line_length": 1100,
+    "code_blocks": false,
+    "tables": false
+  },
+  "code-blocks": false,
+  "tables": false,
+  "MD009": false,
+  "ignores": {
+    "README.md": ["MD013"],
+    "CHANGELOG.md": ["MD013"],
+    "CONTRIBUTING.md": ["MD013"],
+    "CODE_OF_CONDUCT.md": ["MD013"],
+    "LICENSE": ["MD013", "MD029/ol_prefix"]
+  }
+}
